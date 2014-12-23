@@ -3,13 +3,21 @@ var module = angular.module("lvl.directives.dragdrop", ['lvl.services']);
 module.directive('lvlDraggable', ['$rootScope', 'uuid', function($rootScope, uuid) {
 	    return {
 	        restrict: 'A',
+	        scope: {
+	            dragid : '='
+	        },
 	        link: function(scope, el, attrs, controller) {
 	        	angular.element(el).attr("draggable", "true");
-	            
-	            var id = angular.element(el).attr("id");
-	            if (!id) {
-	                id = uuid.new()
-	                angular.element(el).attr("id", id);
+
+	            var id;
+	            if (scope.dragid) {
+	                id = scope.dragid;
+	            } else {
+                        id = angular.element(el).attr("id");
+                        if (!id) {
+                            id = uuid.new()
+                            angular.element(el).attr("id", id);
+                        }
 	            }
 	            
 	            el.bind("dragstart", function(e) {
@@ -29,13 +37,19 @@ module.directive('lvlDropTarget', ['$rootScope', 'uuid', function($rootScope, uu
 	    return {
 	        restrict: 'A',
 	        scope: {
-	            onDrop: '&'
+	            onDrop: '&',
+	            dropid: '='
 	        },
 	        link: function(scope, el, attrs, controller) {
-	            var id = angular.element(el).attr("id");
-	            if (!id) {
-	                id = uuid.new()
-	                angular.element(el).attr("id", id);
+	            var id;
+	            if (scope.dropid) {
+	                id = scope.dropid;
+	            } else {
+	                id = angular.element(el).attr("id");
+	                if (!id) {
+	                    id = uuid.new()
+	                    angular.element(el).attr("id", id);
+	                }
 	            }
 	                       
 	            el.bind("dragover", function(e) {
@@ -65,8 +79,8 @@ module.directive('lvlDropTarget', ['$rootScope', 'uuid', function($rootScope, uu
 	                e.stopPropagation(); // Necessary. Allows us to drop.
 	              }
 	            	var data = e.dataTransfer.getData("text");
-	                var dest = document.getElementById(id);
-	                var src = document.getElementById(data);
+	                var dest = id;
+	                var src = data;
 	                
 	                scope.onDrop({dragEl: src, dropEl: dest});
 	            });
