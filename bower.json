@@ -1,9 +1,10 @@
 {
   "name": "lvlDragDrop",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "homepage": "http://jasonturim.wordpress.com/2013/09/01/angularjs-drag-and-drop/",
   "authors": [
-    "Jason Turim"
+    "Jason Turim",
+    "OC Team"
   ],
   "description": "An easy to use, native, directive to enable drag/drop in your angular app. This directive has no dependency on jQuery or other frameworks, it does require a browser that supports the HTML5 drag/drop events",
   "main": "script/lvl-drag-drop.js",
